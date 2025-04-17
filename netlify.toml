@@ -1,5 +1,4 @@
-git add .
-git commit -m "Initial commit"[build]
+[build]
   publish = "build"
   command = "npm run build"
 
