@@ -41,13 +41,18 @@ const InvoicePDFExport = ({ invoice, children }) => {
       loadingMessage.textContent = 'Generating PDF, please wait...';
       document.body.appendChild(loadingMessage);
       
+      // Show the element before exporting
+      const previousDisplay = element.style.display;
+      element.style.display = 'block';
+
       // Generate PDF with progress tracking
       html2pdf().from(element).set(opt).save().then(() => {
-        // Remove loading message when complete
+        // Hide the element again after export
+        element.style.display = previousDisplay;
         document.body.removeChild(loadingMessage);
         console.log('PDF generated successfully');
       }).catch(error => {
-        // Remove loading message and show error
+        element.style.display = previousDisplay;
         document.body.removeChild(loadingMessage);
         console.error('Error generating PDF:', error);
         alert('There was an error generating the PDF. Please try again or contact support.');
