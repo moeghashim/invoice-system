@@ -29,10 +29,14 @@ class InvoiceService {
     if (maxIdRow && maxIdRow.length > 0 && maxIdRow[0].id) {
       newId = parseInt(maxIdRow[0].id, 10) + 1;
     }
+    // Remove 'item_number' property from each item if it exists
+    const cleanedItems = (invoiceData.items || []).map(({ item_number, ...rest }) => rest);
+
     const newInvoice = {
       ...invoiceData,
       id: newId,
-      date: new Date().toISOString().split('T')[0],
+      date: invoiceData.date, // Use the user-selected date
+      items: cleanedItems,
       status: 'draft',
     };
     const { data, error } = await supabase.from('invoices').insert([newInvoice]).select().single();
