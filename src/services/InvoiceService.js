@@ -1,85 +1,66 @@
-// Mock API service for invoice data
-// In a real application, this would connect to a backend server
+// InvoiceService using Supabase for all operations
+import { supabase } from '../supabaseClient';
 
 class InvoiceService {
-  constructor() {
-    // Initialize with mock data from localStorage or default data
-    this.initializeData();
+  // Get all invoices from Supabase
+  async getInvoices() {
+    const { data, error } = await supabase.from('invoices').select('*').order('id', { ascending: false });
+    if (error) throw error;
+    return data || [];
   }
 
-  // Initialize data from localStorage or use defaults
-  initializeData() {
-    const storedInvoices = localStorage.getItem('invoices');
-    if (storedInvoices) {
-      this.invoices = JSON.parse(storedInvoices);
-    } else {
-      // Default mock data
-      this.invoices = [
-        {
-          id: '651',
-          date: '2025-02-27',
-          customer: {
-            company_name: 'شركة لام فاء للديكور',
-            attention: '',
-            phone: ''
-          },
-          items: [
-            { item_number: 'Wood chair', description: 'Wood chair', quantity: 16, price: 56, extension: 896, image: null },
-            { item_number: 'Table base', description: 'Table base', quantity: 2, price: 172.5, extension: 345, image: null },
-            { item_number: 'Metal console', description: 'Metal console', quantity: 1, price: 86.5, extension: 86.5, image: null }
-          ],
-          subtotal: 1327.5,
-          tax: 213,
-          total: 1540.5,
-          terms: '',
-          status: 'sent',
-          validity_period: 15
-        },
-        {
-          id: '650',
-          date: '2025-02-15',
-          customer: {
-            company_name: 'Al Manar Furniture',
-            attention: 'Mohammed',
-            phone: '00962777123456'
-          },
-          items: [
-            { item_number: 'Sofa set', description: 'Luxury sofa set', quantity: 1, price: 2350.75, extension: 2350.75, image: null }
-          ],
-          subtotal: 2350.75,
-          tax: 376.12,
-          total: 2726.87,
-          terms: 'Payment due within 30 days',
-          status: 'paid',
-          validity_period: 15
-        },
-        {
-          id: '649',
-          date: '2025-02-10',
-          customer: {
-            company_name: 'Home Center',
-            attention: 'Sarah',
-            phone: '00962799887766'
-          },
-          items: [
-            { item_number: 'Dining table', description: 'Wooden dining table', quantity: 3, price: 625.08, extension: 1875.24, image: null }
-          ],
-          subtotal: 1875.24,
-          tax: 300.04,
-          total: 2175.28,
-          terms: '',
-          status: 'draft',
-          validity_period: 15
-        }
-      ];
-      this.saveToLocalStorage();
+  // Get invoice by ID from Supabase
+  async getInvoiceById(id) {
+    const { data, error } = await supabase.from('invoices').select('*').eq('id', id).single();
+    if (error) throw error;
+    return data;
+  }
+
+  // Create new invoice in Supabase, auto-incrementing from 1001 if table is empty
+  async createInvoice(invoiceData) {
+    // Find current max id
+    const { data: maxIdRow, error: maxIdError } = await supabase
+      .from('invoices')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1);
+    if (maxIdError) throw maxIdError;
+    let newId = 1001;
+    if (maxIdRow && maxIdRow.length > 0 && maxIdRow[0].id) {
+      newId = parseInt(maxIdRow[0].id, 10) + 1;
     }
+    const newInvoice = {
+      ...invoiceData,
+      id: newId,
+      date: new Date().toISOString().split('T')[0],
+      status: 'draft',
+    };
+    const { data, error } = await supabase.from('invoices').insert([newInvoice]).select().single();
+    if (error) throw error;
+    return data;
   }
 
-  // Save current data to localStorage
-  saveToLocalStorage() {
-    localStorage.setItem('invoices', JSON.stringify(this.invoices));
+  // Update existing invoice in Supabase
+  async updateInvoice(id, invoiceData) {
+    const { data, error } = await supabase
+      .from('invoices')
+      .update(invoiceData)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
   }
+
+  // Delete invoice in Supabase
+  async deleteInvoice(id) {
+    const { error } = await supabase.from('invoices').delete().eq('id', id);
+    if (error) throw error;
+    return { success: true };
+  }
+}
+
+export default new InvoiceService();
 
   // Get all invoices
   getInvoices() {
