@@ -7,6 +7,11 @@ git commit -m "Initial commit"[build]
   command = "npm start"
 
 # Uncomment and customize the following for redirects or environment variables
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 #[[redirects]]
 #  from = "/api/*"
 #  to = "/.netlify/functions/:splat"
