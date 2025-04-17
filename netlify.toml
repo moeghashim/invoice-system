@@ -1,0 +1,13 @@
+git add .
+git commit -m "Initial commit"[build]
+  publish = "build"
+  command = "npm run build"
+
+[dev]
+  command = "npm start"
+
+# Uncomment and customize the following for redirects or environment variables
+#[[redirects]]
+#  from = "/api/*"
+#  to = "/.netlify/functions/:splat"
+#  status = 200

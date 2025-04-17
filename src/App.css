@@ -1,0 +1,98 @@
+/* App.css - Global styles for the invoice app */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Custom colors for Al Rayyan Furniture branding */
+.btn-primary {
+  background-color: #8B4513;
+  border-color: #8B4513;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #704012;
+  border-color: #704012;
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Invoice view styles */
+.invoice-header {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.invoice-company-logo {
+  max-width: 150px;
+  height: auto;
+}
+
+.invoice-company-info {
+  font-size: 0.9rem;
+}
+
+.invoice-customer-info {
+  margin-bottom: 2rem;
+}
+
+.invoice-items-table th {
+  background-color: #f8f9fa;
+}
+
+.invoice-totals {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+/* Print styles for PDF export */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .invoice-container {
+    padding: 0;
+    margin: 0;
+  }
+  
+  body {
+    background-color: white;
+  }
+  
+  .print-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .card-body {
+    padding: 0 !important;
+  }
+}
