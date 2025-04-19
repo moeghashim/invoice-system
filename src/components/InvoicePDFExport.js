@@ -13,19 +13,33 @@ const InvoicePDFExport = ({ invoice, children }) => {
         return;
       }
       
-      // Configure html2pdf options
+      // Configure html2pdf options for single A4 page
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: [5, 5, 5, 5], // smaller margins
         filename: `Invoice-${invoice.id}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
-          scale: 2, 
+          scale: 1, // avoid oversize
           useCORS: true,
           logging: true,
           letterRendering: true
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
+
+      // Add style to prevent page breaks inside invoice
+      const style = document.createElement('style');
+      style.innerHTML = `
+        #invoice-to-print {
+          max-width: 190mm;
+          margin: 0 auto;
+          page-break-inside: avoid !important;
+        }
+        #invoice-to-print table, #invoice-to-print tr, #invoice-to-print td, #invoice-to-print th, #invoice-to-print div {
+          page-break-inside: avoid !important;
+        }
+      `;
+      document.head.appendChild(style);
       
       // Display loading message to user
       const loadingMessage = document.createElement('div');
@@ -50,10 +64,13 @@ const InvoicePDFExport = ({ invoice, children }) => {
         // Hide the element again after export
         element.style.display = previousDisplay;
         document.body.removeChild(loadingMessage);
+        // Remove the added style
+        document.head.removeChild(style);
         console.log('PDF generated successfully');
       }).catch(error => {
         element.style.display = previousDisplay;
         document.body.removeChild(loadingMessage);
+        document.head.removeChild(style);
         console.error('Error generating PDF:', error);
         alert('There was an error generating the PDF. Please try again or contact support.');
       });
