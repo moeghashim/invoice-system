@@ -72,7 +72,7 @@ const InvoicePDFCustom = ({ invoice, children }) => {
       quantity: item.quantity,
       unit: `${item.price.toLocaleString('en-US', { minimumFractionDigits: 3 })}`,
     }));
-    doc.autoTable({
+    autoTable(doc, {
       head: [tableColumn.map(col => col.header)],
       body: tableRows.map(row => tableColumn.map(col => row[col.dataKey])),
       startY: y,
@@ -90,7 +90,7 @@ const InvoicePDFCustom = ({ invoice, children }) => {
         3: { cellWidth: 40 }, // unit
       },
     });
-    y = doc.lastAutoTable.finalY + 5;
+    y = doc.lastAutoTable ? doc.lastAutoTable.finalY + 5 : y + 40; // fallback if lastAutoTable is undefined
 
     // --- Totals ---
     doc.setFontSize(12);
