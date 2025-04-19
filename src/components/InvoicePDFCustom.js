@@ -1,6 +1,6 @@
 import React from 'react';
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 // Color definitions
 const BLACK = '#000000';
@@ -9,7 +9,9 @@ const RED = '#d90429';
 
 const InvoicePDFCustom = ({ invoice, children }) => {
   const generatePDF = () => {
-    const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    console.log('[InvoicePDFCustom] Export button clicked. Invoice:', invoice);
+    try {
+      const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
     const pageWidth = doc.internal.pageSize.getWidth();
     let y = 15;
 
@@ -115,6 +117,10 @@ const InvoicePDFCustom = ({ invoice, children }) => {
 
     // Save PDF
     doc.save(`Invoice-${invoice.id}.pdf`);
+    } catch (err) {
+      console.error('[InvoicePDFCustom] PDF generation error:', err);
+      alert('Custom PDF export failed: ' + err.message);
+    }
   };
 
   return (
