@@ -94,7 +94,7 @@ const InvoicePDFExport = ({ invoice, children }) => {
           <div style={{ textAlign: 'right' }}>
             <h1 style={{ margin: '5px 0', color: '#8B4513' }}>INVOICE</h1>
             <p style={{ margin: '2px 0' }}><strong>Invoice #:</strong> {invoice.id}</p>
-            <p style={{ margin: '2px 0' }}><strong>Date:</strong> {new Date(invoice.date).toLocaleDateString()}</p>
+            <p style={{ margin: '2px 0' }}><strong>Date:</strong> {new Date(invoice.date).toLocaleDateString('en-GB')}</p>
           </div>
         </div>
         
