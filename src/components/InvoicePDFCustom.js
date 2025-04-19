@@ -2,8 +2,6 @@ import React from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-autoTable(jsPDF); // Explicitly register the plugin
-
 // Color definitions
 const BLACK = '#000000';
 const BLUE = '#0074d9';
