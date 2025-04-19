@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Table, Button, Card, Badge } from 'react-bootstrap';
+import { Container, Table, Button, Card, Badge, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PDFExport from '../components/PDFExport';
 
@@ -11,15 +11,19 @@ import { primaryColor } from '../constants/theme';
 const InvoiceList = () => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
 
   // Fetch invoices from service
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
+        console.log('Fetching invoices...');
         const data = await InvoiceService.getInvoices();
+        console.log('Fetched invoices:', data);
         setInvoices(data);
       } catch (error) {
         console.error('Error fetching invoices:', error);
+        setFetchError(error.message || 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -80,7 +84,7 @@ const InvoiceList = () => {
                   <tr key={invoice.id}>
                     <td>{invoice.id}</td>
                     <td>{formatDate(invoice.date)}</td>
-                    <td>{invoice.customer.company_name}</td>
+                    <td>{invoice.customer?.company_name || invoice.company_name}</td>
                     <td>{formatCurrency(invoice.total)}</td>
                     <td>
                       <Badge bg={getStatusBadge(invoice.status)}>

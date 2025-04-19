@@ -4,6 +4,7 @@ import { supabase } from '../supabaseClient';
 class InvoiceService {
   // Get all invoices from Supabase
   async getInvoices() {
+    console.log('InvoiceService: fetching invoices from Supabase');
     const { data, error } = await supabase.from('invoices').select('*').order('id', { ascending: false });
     if (error) throw error;
     return data || [];

@@ -103,12 +103,12 @@ const InvoiceView = () => {
             <Row>
               <Col md={6}>
                 <h5>Bill To:</h5>
-                <p className="mb-1"><strong>Company:</strong> {invoice.customer.company_name}</p>
-                {invoice.customer.attention && (
-                  <p className="mb-1"><strong>Attention:</strong> {invoice.customer.attention}</p>
+                <p className="mb-1"><strong>Company:</strong> {invoice.customer?.company_name || invoice.company_name}</p>
+                {(invoice.customer?.attention || invoice.attention) && (
+                  <p className="mb-1"><strong>Attention:</strong> {invoice.customer?.attention || invoice.attention}</p>
                 )}
-                {invoice.customer.phone && (
-                  <p><strong>Phone:</strong> {invoice.customer.phone}</p>
+                {(invoice.customer?.phone || invoice.phone) && (
+                  <p><strong>Phone:</strong> {invoice.customer?.phone || invoice.phone}</p>
                 )}
               </Col>
             </Row>

@@ -84,28 +84,34 @@ const InvoicePDFExport = ({ invoice, children }) => {
     <div>
       <div id="invoice-to-print" style={{ display: 'none' }}>
         {/* Logo and header */}
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <img 
-            src={`${window.location.origin}/assets/images/logo.png`} 
-            alt="Al Rayyan Furniture Logo" 
-            style={{ maxWidth: '200px', marginBottom: '10px' }}
-          />
-          <h2 style={{ margin: '5px 0' }}>Al Rayyan Furniture</h2>
-          <p style={{ margin: '2px 0' }}>Bayader Wadi Alser-Industrial Zone-Aldarbiat 12st</p>
-          <p style={{ margin: '2px 0' }}>P: 0786050155</p>
-          <p style={{ margin: '2px 0' }}>E: Samerghachim101@gmail.com</p>
-        </div>
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <img
+              src={`${window.location.origin}/assets/images/logo.png`}
+              alt="Al Rayyan Furniture Logo"
+              style={{ maxWidth: '200px', marginBottom: '10px' }}
+            />
+            <h2 style={{ margin: '5px 0' }}>Al Rayyan Furniture</h2>
+            <p style={{ margin: '2px 0' }}>Bayader Wadi Alser-Industrial Zone-Aldarbiat 12st</p>
+            <p style={{ margin: '2px 0' }}>P: 0786050155</p>
+            <p style={{ margin: '2px 0' }}>E: Samerghachim101@gmail.com</p>
+          </div>
         
         {/* Invoice details */}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
           <div>
             <h3 style={{ margin: '5px 0' }}>Bill To:</h3>
-            <p style={{ margin: '2px 0' }}><strong>Company:</strong> {invoice.customer.company_name}</p>
-            {invoice.customer.attention && (
-              <p style={{ margin: '2px 0' }}><strong>Attention:</strong> {invoice.customer.attention}</p>
+            <p style={{ margin: '2px 0' }}>
+              <strong>Company:</strong> {invoice.customer?.company_name || invoice.company_name}
+            </p>
+            {(invoice.customer?.attention || invoice.attention) && (
+              <p style={{ margin: '2px 0' }}>
+                <strong>Attention:</strong> {invoice.customer?.attention || invoice.attention}
+              </p>
             )}
-            {invoice.customer.phone && (
-              <p style={{ margin: '2px 0' }}><strong>Phone:</strong> {invoice.customer.phone}</p>
+            {(invoice.customer?.phone || invoice.phone) && (
+              <p style={{ margin: '2px 0' }}>
+                <strong>Phone:</strong> {invoice.customer?.phone || invoice.phone}
+              </p>
             )}
           </div>
           <div style={{ textAlign: 'right' }}>
