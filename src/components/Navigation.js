@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 const Navigation = () => {
@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <Navbar bg="light" expand="lg" className="mb-4">
       <Container>
-        <Navbar.Brand href="/invoices">
+        <Navbar.Brand as={Link} to="/invoices">
           <img
             src="/assets/images/logo.png"
             height="30"
@@ -27,7 +27,7 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/invoices">Invoices</Nav.Link>
+            <Nav.Link as={Link} to="/invoices">Invoices</Nav.Link>
           </Nav>
           {currentUser && (
             <Nav>

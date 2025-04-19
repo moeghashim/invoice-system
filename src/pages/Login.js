@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import { Form, Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { primaryColor } from '../constants/theme';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -65,11 +66,11 @@ const Login = () => {
                   />
                 </Form.Group>
                 
-                <Button 
-                  disabled={loading} 
-                  className="w-100" 
+                <Button
+                  disabled={loading}
+                  className="w-100"
                   type="submit"
-                  style={{ backgroundColor: '#8B4513', borderColor: '#8B4513' }}
+                  style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
                 >
                   Log In
                 </Button>

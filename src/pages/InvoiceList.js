@@ -5,6 +5,8 @@ import PDFExport from '../components/PDFExport';
 
 // Import invoice service
 import InvoiceService from '../services/InvoiceService';
+import { formatDate, formatCurrency } from '../utils/format';
+import { primaryColor } from '../constants/theme';
 
 const InvoiceList = () => {
   const [invoices, setInvoices] = useState([]);
@@ -40,28 +42,15 @@ const InvoiceList = () => {
     }
   };
 
-  // Format date to a more readable format
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  // Format currency
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'JOD'
-    }).format(amount);
-  };
 
   return (
     <Container>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Invoices</h2>
         <Link to="/invoices/new">
-          <Button 
-            variant="primary" 
-            style={{ backgroundColor: '#8B4513', borderColor: '#8B4513' }}
+          <Button
+            variant="primary"
+            style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
           >
             Create New Invoice
           </Button>

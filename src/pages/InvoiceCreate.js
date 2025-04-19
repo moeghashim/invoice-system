@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import ItemImageUpload from '../components/ItemImageUpload';
 import MobileQuantityInput from '../components/MobileQuantityInput';
 import InvoiceService from '../services/InvoiceService';
+import { formatCurrency } from '../utils/format';
+import { primaryColor } from '../constants/theme';
 
 const InvoiceCreate = () => {
   const navigate = useNavigate();
@@ -85,13 +87,6 @@ const InvoiceCreate = () => {
     }
   };
   
-  // Format currency
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'JOD'
-    }).format(amount);
-  };
   
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -334,10 +329,10 @@ const InvoiceCreate = () => {
           <Link to="/invoices">
             <Button variant="outline-secondary">Cancel</Button>
           </Link>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             variant="primary"
-            style={{ backgroundColor: '#8B4513', borderColor: '#8B4513' }}
+            style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
           >
             Create Invoice
           </Button>

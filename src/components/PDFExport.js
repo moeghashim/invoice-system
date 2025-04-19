@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'react-bootstrap';
+import { primaryColor } from '../constants/theme';
 
 // PDF Export component that wraps around content to be printed
 const PDFExport = ({ children, filename = 'document', triggerRef = null }) => {
@@ -44,10 +45,10 @@ const PDFExport = ({ children, filename = 'document', triggerRef = null }) => {
       {/* Only render button if no external trigger is provided */}
       {!triggerRef && (
         <div className="d-flex justify-content-end mt-3 no-print">
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             onClick={handlePrint}
-            style={{ backgroundColor: '#8B4513', borderColor: '#8B4513' }}
+            style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
           >
             Export PDF
           </Button>

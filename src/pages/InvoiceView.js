@@ -6,6 +6,8 @@ import InvoicePDFCustom from '../components/InvoicePDFCustom';
 
 // Import invoice service
 import InvoiceService from '../services/InvoiceService';
+import { formatDate, formatCurrency } from '../utils/format';
+import { primaryColor } from '../constants/theme';
 
 const InvoiceView = () => {
   const { id } = useParams();
@@ -44,19 +46,6 @@ const InvoiceView = () => {
     );
   }
 
-  // Format date
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  // Format currency
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'JOD'
-    }).format(amount);
-  };
 
   return (
     <Container className="mt-4 mb-5">
@@ -64,9 +53,9 @@ const InvoiceView = () => {
         <h2>Invoice #{invoice.id}</h2>
         <div className="d-flex gap-2">
           <InvoicePDFExport invoice={invoice}>
-            <Button 
-              variant="primary" 
-              style={{ backgroundColor: '#8B4513', borderColor: '#8B4513' }}
+            <Button
+              variant="primary"
+              style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
             >
               Export PDF
             </Button>
