@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import InvoicePDFExport from '../components/InvoicePDFExport';
+import InvoicePDFCustom from '../components/InvoicePDFCustom';
 
 // Import invoice service
 import InvoiceService from '../services/InvoiceService';
@@ -70,6 +71,14 @@ const InvoiceView = () => {
               Export PDF
             </Button>
           </InvoicePDFExport>
+          <InvoicePDFCustom invoice={invoice}>
+            <Button 
+              variant="primary" 
+              style={{ backgroundColor: '#0074d9', borderColor: '#0074d9' }}
+            >
+              Export Custom PDF
+            </Button>
+          </InvoicePDFCustom>
           <Link to="/invoices">
             <Button variant="outline-secondary">Back to List</Button>
           </Link>
